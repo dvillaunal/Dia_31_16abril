@@ -1,0 +1,11 @@
+Profe no entendí el reto de hoy....la verdad
+por más que lo estudie no lo entiendo; ya mire videos, leí páginas pero no lo asimilo.
+
+Si pudiera darme una asesoría del Web scraping sería
+genial (Me siento muy perdido), no se si mis demás compañeros del Reto estarán de acuerdo.
+
+-----------------------------------------------------
+-> de lo poco que entendí quedo anexado en el main.py <- 
+-----------------------------------------------------
+
+me pareció muy abstracta y difícil de digerir....
