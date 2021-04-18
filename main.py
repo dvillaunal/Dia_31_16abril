@@ -46,3 +46,71 @@ En este caso, la etiqueta HTML es " span " y la clase es " tag-box-choosetags"
 '''
 days100_tags = soup.findAll('6 More', {'class': 'tag-box-choosetangs'})
 print(days100_tags)
+
+########################## Ejemplo de web scraping ##########################
+import pandas as pd
+import requests
+from bs4 import BeautifulSoup
+
+# Vamos a extraer información de la liga satander del Diario AS:
+'Ponemos en una varible la url'
+
+dweb = 'https://resultados.as.com/resultados/futbol/primera/clasificacion/' # <. Tipo str
+
+page_AS = requests.get(dweb) # <- Ahora descargamos el contenido de la pagina
+
+# Ahora transformamos a formato HTML para poder ir accediendo a los diferentes elementos de la pagina
+'Así podemoes empexar a escraper'
+
+soup_AS = BeautifulSoup(page_AS.content, 'html.parser') # <- interpreta como html
+
+# Inspeccionar por Equipos 
+'Con el .find_all busco en el archivo soup_AS (de BeautifulSoup) por "span" y despues'
+'por una clase que se puede visualizar en el link del video (opciones de programador)'
+'llamada "nombre-equipo"  para doder guardar los resultados en listas'
+
+eq = soup_AS.find_all('span', {'class': 'nombre-equipo'})
+
+lista_equipos = list()
+
+# Un for para guardar solamente los nombre de cada equipo (Estamos depurando datos):
+
+c = 0 # un count para que los nombres de los equipos no se repitan, inventigando solo son los priemros 20 (como se ve en la pagina) 
+for i in eq:
+  if c < 20: # es estrictamente  a 20 porque se toma desde el cero
+    lista_equipos.append(i.get_text())
+  else:
+    break
+  c += 1
+
+# Ahora hacemos lo mismo para la puntiación de los equipos:
+
+pt = soup_AS.find_all('td', {'class': 'destacado'})
+
+puntuacion = list()
+
+# Un for para guardar solamente los puntos por cada equipo (Estamos depurando datos):
+
+c = 0 # un count para que los puntos de los equipos no se repitan
+for i in pt:
+  if c < 20: # es estrictamente  a 20 porque se toma desde el cero
+    puntuacion.append(i.get_text())
+  else:
+    break
+  c += 1
+
+print(puntuacion)
+
+# Importe pandas para hacer un data frame y guardar el scrape hecho:
+
+'Guardamos un data frame los Nombres de los equipos y sus respectivvos puntos'
+'Como el dataframe empieza en 0 le decimos que empiece en 1 y termine en 21 = 20(elemntos) + 1(el valor agregado)'
+
+puntosXequipo = pd.DataFrame({'Nombre de Equipo': lista_equipos, 'Puntos': puntuacion}, index= list(range(1,21)))
+print(puntosXequipo)
+
+# Guardaremos en csv (Una buena practia de Scraping guardar los datos depurados):
+'Ya que con .to_excel esta pronto quedar sin soporte entonces utlizare .to_csv'
+'Además asi se podra visualizar desde el replit el csv'
+
+puntosXequipo.to_csv('Puntos_por_Equipo_(Liga Santander).csv', index=False)

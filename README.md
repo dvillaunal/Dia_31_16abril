@@ -35,5 +35,20 @@ Aquí usamos BeautifulSoup pasando el texto de la página como parámetro y usan
 soup = BeautifulSoup(página de texto, "html.parser")
 ~~~
 
+## 3. Eliminando todas las etiquetas HTML y convirtiéndolo en un formato de texto plano:
 
+Aquí eliminamos todas las etiquetas HTML y lo convertimos a un formato de texto, esto se puede hacer con la ayuda del método ``.get_text()`` colocado dentro de un bucle for. Esto convierte el HTML en el formato de texto.
+
+___Nota:
+Solo es un ejemplo para dejar las cosas claras nada más___
+~~~
+for i in puntos:
+    print(i.get_text())
+~~~
+
+#### __OutPut__:
+
+~~~
+['67', '66', '65', '61', '47', '47', '46', '39', '38', '37', '37', '35', '34', '34', '30', '27', '27', '26', '24', '23']
+~~~
 
