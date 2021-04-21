@@ -29,23 +29,8 @@ page = requests.get(url)
 print(page.content)
 
 # 2.
-soup = BeautifulSoup(page.text, "html.parser")
-print(soup)
-
-# 3.
-'Vamos a buscar etiquetas dentro del html con .find_all()'
-
-days100_tags = soup.find_all("Next Steps")
-
-
-# 3.
-'''
-Luego puede copiar la etiqueta HTML y la clase, si corresponde,
-y luego colocarla dentro del método soup.find_all()
-En este caso, la etiqueta HTML es " span " y la clase es " tag-box-choosetags"
-'''
-days100_tags = soup.findAll('6 More', {'class': 'tag-box-choosetangs'})
-print(days100_tags)
+sopa = BeautifulSoup(page.text, "html.parser")
+print(sopa)
 
 ########################## Ejemplo de web scraping ##########################
 import pandas as pd
@@ -60,7 +45,7 @@ dweb = 'https://resultados.as.com/resultados/futbol/primera/clasificacion/' # <.
 page_AS = requests.get(dweb) # <- Ahora descargamos el contenido de la pagina
 
 # Ahora transformamos a formato HTML para poder ir accediendo a los diferentes elementos de la pagina
-'Así podemoes empexar a escraper'
+'Así podemos empezar a escrapear'
 
 soup_AS = BeautifulSoup(page_AS.content, 'html.parser') # <- interpreta como html
 
@@ -83,7 +68,7 @@ for i in eq:
     break
   c += 1
 
-# Ahora hacemos lo mismo para la puntiación de los equipos:
+# Ahora hacemos lo mismo para la puntuación de los equipos:
 
 pt = soup_AS.find_all('td', {'class': 'destacado'})
 
@@ -107,10 +92,13 @@ print(puntuacion)
 'Como el dataframe empieza en 0 le decimos que empiece en 1 y termine en 21 = 20(elemntos) + 1(el valor agregado)'
 
 puntosXequipo = pd.DataFrame({'Nombre de Equipo': lista_equipos, 'Puntos': puntuacion}, index= list(range(1,21)))
-print(puntosXequipo)
+
 
 # Guardaremos en csv (Una buena practia de Scraping guardar los datos depurados):
 'Ya que con .to_excel esta pronto quedar sin soporte entonces utlizare .to_csv'
 'Además asi se podra visualizar desde el replit el csv'
 
 puntosXequipo.to_csv('Puntos_por_Equipo_(Liga Santander).csv', index=False)
+
+print(puntosXequipo)
+
